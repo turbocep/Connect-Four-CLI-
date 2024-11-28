@@ -20,8 +20,29 @@ class Game
       end
     end
   end
+
+  def add(column, symbol)
+    current = column - 1
+    loop do
+      next_index = current + @columns
+      if @board[next_index] != '_'
+        return @board[current] = symbol
+      else
+        current += @columns
+      end
+    end
+  end
 end
 
-Game.new.render
+# Create a verify-input method that ensures input is valid (row is not empty 
+# or outside range). Can generate a list of valid commands and only accept 
+# matching ones.
+
+game = Game.new
+game.render
+game.add(1, 'X')
+game.render
+game.add(1, 'X')
+game.render
 
 
