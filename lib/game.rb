@@ -64,11 +64,52 @@ class Game
     end
   end
 
+  def diagonals_left
+    index = 0
+    result = []
+    loop do
+      current = index
+      resultant_diagonal = []
+      loop do
+        resultant_diagonal.push(@board[current])
+        break result.push(resultant_diagonal) if current % @columns == 0 || current / @columns >= @rows - 1
+
+        current += (@columns - 1)
+      end 
+      index += (index + 1) >= @columns ? @columns : 1
+      return result if index > @board.length
+    end
+  end
+
+  def diagonals_right
+    index = @columns - 1
+    result = []
+    loop do
+      current = index
+      resultant_diagonal = []
+      loop do
+        resultant_diagonal.push(@board[current])
+        break result.push(resultant_diagonal) if (current + 1) % @columns == 0 || current / @columns >= @rows - 1
+
+        current += (@columns + 1)
+      end
+      increment = index == 0 || index > (@columns - 1) ? @columns : -1
+      index += increment
+      return result if index >= @board.length
+    end
+  end
+
+  def diagonals
+    diagonals_left.concat(diagonals_right)
+  end
+
   def wins?
     # Return 1 for player 1, 2 for player 2, 0 for no wins.
     
   end
 end
+
+p Game.new.diagonals
 
 
 

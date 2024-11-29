@@ -143,4 +143,75 @@ describe Game do
       end
     end
   end
+  describe '#diagonals' do
+    let(:game) { Game.new }
+    context 'when 7x6 board is empty' do
+      it 'returns corresponding diagonals' do
+        result = game.diagonals
+        expected_result = [
+          %w[_],
+          %w[_ _],
+          %w[_ _ _],
+          %w[_ _ _ _],
+          %w[_ _ _ _ _],
+          %w[_ _ _ _ _ _],
+          %w[_ _ _ _ _ _],
+          %w[_ _ _ _ _],
+          %w[_ _ _ _],
+          %w[_ _ _],
+          %w[_ _],
+          %w[_],
+          %w[_],
+          %w[_ _],
+          %w[_ _ _],
+          %w[_ _ _ _],
+          %w[_ _ _ _ _],
+          %w[_ _ _ _ _ _],
+          %w[_ _ _ _ _ _],
+          %w[_ _ _ _ _],
+          %w[_ _ _ _],
+          %w[_ _ _],
+          %w[_ _],
+          %w[_]
+        ]
+        expect(result).to eql(expected_result)
+      end
+    end
+    context 'when 7x6 board is partially filled' do
+      it 'returns corresponding diagonals' do
+        (2..7).each do | column |
+          (column - 1).times { game.add(column, 'X') }
+        end
+        game.render
+        result = game.diagonals
+        expected_result = [
+          %w[_],
+          %w[_ _],
+          %w[_ _ _],
+          %w[_ _ _ _],
+          %w[_ _ _ _ _],
+          %w[_ _ _ _ _ _],
+          %w[X X X X X X],
+          %w[X X X X X],
+          %w[X X X X],
+          %w[X X X],
+          %w[X X],
+          %w[X],
+          %w[X],
+          %w[_ X],
+          %w[_ X X],
+          %w[_ _ X X],
+          %w[_ _ X X X],
+          %w[_ _ _ X X X],
+          %w[_ _ _ X X X],
+          %w[_ _ _ X X],
+          %w[_ _ X X],
+          %w[_ _ X],
+          %w[_ X],
+          %w[_]
+        ]
+        expect(result).to eql(expected_result)
+      end
+    end
+  end
 end
