@@ -2,11 +2,12 @@ require_relative 'player'
 
 class Game
   attr_reader :board, :players, :rows
-  def initialize(columns = 7, rows = 6, players = [Player.new, Player.new])
+  def initialize(columns = 7, rows = 6, players = [Player.new('X'), Player.new('O')])
     @columns = columns
     @rows = rows
     @board = Array.new(columns * rows, '_')
     @players = players
+    @round = 1
   end
 
   def render
@@ -104,7 +105,6 @@ class Game
   end
 
   def win?
-    # Return 1 for player 1, 2 for player 2, 0 for no wins.
     horizontals.concat(verticals, diagonals).map do |combo|
       new_combo = combo
       new_combo.delete('_')
@@ -124,9 +124,35 @@ class Game
     end
     false
   end
+
+  def play
+    # Welcome messages
+    # First player goes
+    # Loop and all that shit
+    # End game
+    puts "Welcome to Connect Four players #{@players.first.name} and #{@players.last.name}!"
+    loop do
+      puts "Round #{@round}"
+      render
+      current_player = @round.odd? ? @players.first : @players.last
+      move = current_player.get_move(valid_moves)
+      add(move, current_player.symbol)
+      @round += 1
+      if @round > 4
+        if win?
+          puts "GAME OVER"
+          puts "#{current_player.name} with symbol #{current_player.symbol} WON in #{@round} rounds!"
+          break
+        elsif valid_moves == []
+          puts "GAME OVER"
+          puts "It was a tie!"
+        end
+      end
+    end
+  end
 end
 
-p Game.new.win?
+Game.new.play
 
 
 
