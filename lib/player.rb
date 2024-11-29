@@ -1,8 +1,9 @@
 class Player
-  attr_reader :name, :type
-  def initialize(name = 'anonymous', type = :user)
+  attr_reader :name, :type, :symbol
+  def initialize(symbol, name = 'anonymous', type = :user)
     @name = name
     @type = type
+    @symbol = symbol
   end
 
   def get_move(valid_moves)
@@ -26,6 +27,3 @@ class Player
     valid_moves.include?(move)
   end
 end
-
-player = Player.new
-p player.get_move([1])
