@@ -42,6 +42,16 @@ class Game
     end
   end
 
+  def horizontals
+    result = []
+    @rows.times do | row |
+      start = row * @columns
+      stop = start + @columns - 1
+      result.push(@board[start..stop])
+    end
+    result
+  end
+
   def wins?
     # Return 1 for player 1, 2 for player 2, 0 for no wins.
     

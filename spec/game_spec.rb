@@ -86,4 +86,32 @@ describe Game do
       end
     end
   end
+  describe '#horizontals' do
+    let(:game) { Game.new }
+    context 'when 7x6 board is empty' do
+      it 'returns empty horizontals' do
+        result = game.horizontals
+        expected_result = Array.new(6) { Array.new(7, '_') }
+        expect(result).to eql(expected_result)
+      end
+    end
+    context 'when 7x6 board is not empty' do
+      it 'returns corresponding horizontals' do
+        (2..7).each do | column |
+          (column - 1).times { game.add(column, 'X') }
+        end
+        game.render
+        result = game.horizontals
+        expected_result = [
+          %w[_ _ _ _ _ _ X],
+          %w[_ _ _ _ _ X X],
+          %w[_ _ _ _ X X X],
+          %w[_ _ _ X X X X],
+          %w[_ _ X X X X X],
+          %w[_ X X X X X X]
+        ]
+        expect(result).to eql expected_result
+      end
+    end
+  end
 end
