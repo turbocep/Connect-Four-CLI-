@@ -100,7 +100,6 @@ describe Game do
         (2..7).each do | column |
           (column - 1).times { game.add(column, 'X') }
         end
-        game.render
         result = game.horizontals
         expected_result = [
           %w[_ _ _ _ _ _ X],
@@ -111,6 +110,36 @@ describe Game do
           %w[_ X X X X X X]
         ]
         expect(result).to eql expected_result
+      end
+    end
+  end
+  describe '#verticals' do
+    let(:game) { Game.new }
+    context 'when 7x6 board is empty' do
+      it 'returns empty verticals' do
+        result = game.verticals
+        expected_result = Array.new(7) { Array.new(6, '_') }
+        expect(result).to eql(expected_result)
+      end
+    end
+    context 'when 7x6 board is not empty' do
+      it 'returns corresponding verticals' do
+        (2..7).each do | column |
+          (column - 1).times { game.add(column, 'X') }
+        end
+        result = game.verticals
+        # Origin: Top left corner.
+        expected_result = [
+          %w[_ _ _ _ _ _],
+          %w[_ _ _ _ _ X],
+          %w[_ _ _ _ X X],
+          %w[_ _ _ X X X],
+          %w[_ _ X X X X],
+          %w[_ X X X X X],
+          %w[X X X X X X]
+        ]
+        expect(result).to eql(expected_result)
+        p result
       end
     end
   end

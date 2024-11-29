@@ -52,6 +52,18 @@ class Game
     result
   end
 
+  def verticals
+    (0..(@columns - 1)).map do | column |
+      result = []
+      current = column
+      loop do
+        result.push(@board[current])
+        current += @columns
+        break result if current > (@board.length - 1)
+      end
+    end
+  end
+
   def wins?
     # Return 1 for player 1, 2 for player 2, 0 for no wins.
     
