@@ -103,13 +103,32 @@ class Game
     diagonals_left.concat(diagonals_right)
   end
 
-  def wins?
+  def win?
     # Return 1 for player 1, 2 for player 2, 0 for no wins.
-    
+    horizontals.concat(verticals, diagonals).map do |combo|
+      new_combo = combo
+      new_combo.delete('_')
+      new_combo.length >= 4 ? new_combo : nil
+    end.compact.each do | combo |
+      current = combo.first
+      count = 0
+      combo.each do | char |
+        if char == current
+          count += 1
+        else
+          count = 1
+          current = char
+        end
+        return true if count == 4
+      end
+    end
+    false
   end
 end
 
-p Game.new.diagonals
+p Game.new.win?
+
+
 
 
 

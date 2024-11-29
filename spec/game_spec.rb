@@ -214,4 +214,28 @@ describe Game do
       end
     end
   end
+  describe '#win?' do
+    let(:game) { Game.new }
+    context "when there's a win" do
+      it 'returns true' do
+        (1..4).each { | column | game.add(column, 'X') }
+        expect(game.win?).to be true
+      end
+      it 'returns true' do
+        4.times { game.add(1, 'O') }
+        expect(game.win?).to be true
+      end
+    end
+    context "when there's no win" do
+      it 'returns false' do
+        expect(game.win?).to be false
+      end
+      it 'returns false' do
+        3.times { game.add(1, 'X')}
+        game.add(1, 'O')
+        game.add(1, 'X')
+        expect(game.win?).to be false
+      end
+    end
+  end
 end
