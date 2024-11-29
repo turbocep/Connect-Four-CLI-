@@ -1,7 +1,7 @@
 require_relative 'player'
 
 class Game
-  attr_reader :board, :players
+  attr_reader :board, :players, :rows
   def initialize(columns = 7, rows = 6, players = [Player.new, Player.new])
     @columns = columns
     @rows = rows
@@ -32,17 +32,22 @@ class Game
       end
     end
   end
+
+  def valid_moves
+    # Returns an array of columns in which a move can be made.
+    (1..@columns).select do | index |
+      @board[index - 1] == '_'
+    end
+    
+  end
 end
 
 # Create a verify-input method that ensures input is valid (row is not empty 
 # or outside range). Can generate a list of valid commands and only accept 
 # matching ones.
 
-game = Game.new
-game.render
-game.add(1, 'X')
-game.render
-game.add(1, 'X')
-game.render
+# Player class prompts user for input (or Bot). It takes available_moves as a 
+# parameter and only accepts valid moves. 
+
 
 

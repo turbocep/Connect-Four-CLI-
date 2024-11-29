@@ -45,4 +45,45 @@ describe Game do
       end
     end
   end
+  describe '#valid_moves' do
+    let(:game) { Game.new }
+    context 'when board is empty' do
+      it 'returns array of valid moves' do
+        result = game.valid_moves
+        expect(result).to eql([1, 2, 3, 4, 5, 6, 7])
+      end
+    end
+    context 'when column 1 is full' do
+      it 'returns array of valid moves' do
+        game.rows.times { game.add(1, 'X') }
+        result = game.valid_moves
+        expect(result).to eql([2, 3, 4, 5, 6, 7])
+      end
+    end
+    context 'when only last column is empty' do
+      it 'returns array containing only 7' do
+        (1..6).each do | column |
+          6.times { game.add(column, 'X') }
+        end
+        result = game.valid_moves
+        expect(result).to eql([7])
+      end
+    end
+    context 'when each column almost full' do
+      it 'returns array of valid moves' do
+        (1..7).each do |column|
+          5.times { game.add(column, 'X') }
+        end
+        result = game.valid_moves
+        expect(result).to eql([1, 2, 3, 4, 5, 6, 7])
+      end
+    end
+    context 'when entire board is full' do
+      it 'returns empty array' do
+        (1..7).each { |column| 6.times {game.add(column, 'X')}}
+        result = game.valid_moves
+        expect(result).to eql([])
+      end
+    end
+  end
 end
