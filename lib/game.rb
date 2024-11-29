@@ -10,7 +10,10 @@ class Game
   end
 
   def render
-    (1..@columns).each { |c| print " #{c}"}
+    (1..@columns).each do |c| 
+      char = valid_moves.include?(c) ? c : ' '
+      print " #{char}"
+    end
     print " \n"
     @board.each_with_index do | element, i |
       if (i + 1) % @columns > 0
@@ -34,20 +37,16 @@ class Game
   end
 
   def valid_moves
-    # Returns an array of columns in which a move can be made.
     (1..@columns).select do | index |
       @board[index - 1] == '_'
     end
+  end
+
+  def wins?
+    # Return 1 for player 1, 2 for player 2, 0 for no wins.
     
   end
 end
-
-# Create a verify-input method that ensures input is valid (row is not empty 
-# or outside range). Can generate a list of valid commands and only accept 
-# matching ones.
-
-# Player class prompts user for input (or Bot). It takes available_moves as a 
-# parameter and only accepts valid moves. 
 
 
 
